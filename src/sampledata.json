@@ -1,0 +1,28 @@
+[
+    
+    {
+        "id":101,
+        "question": "Who is CM of Andhra",
+        "op1":"jagan",
+        "op2":"CBN",
+        "Ans":"jagan"
+      
+    },
+    {
+        "id":102,
+        "question": "Who is CM of Telangana",
+        "op1":"KCR",
+        "op2":"CBN",
+        "op3":"PK",
+        "Ans":"KCR"
+        
+    },
+    {
+        "id":103,
+        "question": "Hero of sahoo",
+        "op1":"KCR",
+        "op2":"CBN",
+        "op3":"Phrabhas",
+        "Ans":"Phrabhas"
+    }
+]
