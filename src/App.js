@@ -44,6 +44,7 @@ class App extends Component {
     const indexOfLastQuestion = currentPage * questionsPerPage;
     const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
     const currentQuestion = questions.slice(indexOfFirstQuestion, indexOfLastQuestion);
+    const isLastQuestion = currentQuestion.length !== questionsPerPage || indexOfLastQuestion === questions.length;
     console.log(currentQuestion)
   
     const renderQuestions = currentQuestion.map((question, index) => {
@@ -67,7 +68,7 @@ class App extends Component {
         <div>Quiz</div> 
         {renderQuestions}
       
-      <button onClick={this.handleClick}>Next Question</button>
+      {!isLastQuestion && <button onClick={this.handleClick}>Next Question</button>}
       </div>
     )
     
