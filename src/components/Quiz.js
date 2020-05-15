@@ -10,7 +10,7 @@ class Quiz extends Component {
       questions: [],
       currentPage: 1,
       questionsPerPage: 1,
-      subject:this.props.subject,
+      subject:"",
       grade:"",
       chapter:""
     };
@@ -18,15 +18,19 @@ class Quiz extends Component {
     console.log(this.state)
   }
   
- 
+  static getDerivedStateFromProps(props, state){
+    console.log(props)
+    return (
+      {subject: props.selectedSubject},
+      {grade: props.selectedGrade},
+      {chapter: props.selectedLesson}
+    )
+  }
+
   componentWillMount(){
     console.log("Quiz mounted")
     console.log(this.props)
-    //Passing Dashboard state to Quiz state
-    this.setState({subject: this.props.selectedSubject})
-    this.setState({grade: this.props.selectedGrade})
-    this.setState({chapter: this.props.selectedLesson})
-
+    
   
     
 
