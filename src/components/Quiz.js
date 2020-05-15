@@ -19,6 +19,7 @@ class Quiz extends Component {
   }
   
   static getDerivedStateFromProps(props, state){
+    console.log("getDerivedStateFromProps Started")
     console.log(props)
     return (
       {subject: props.selectedSubject},
@@ -27,14 +28,16 @@ class Quiz extends Component {
     )
   }
 
-  componentWillMount(){
+  shouldComponentUpdate() {
+    console.log("shouldComponentUpdate")
+    return true;
+  }
+
+  componentDidMount(){
     console.log("Quiz mounted")
     console.log(this.props)
     
-  
-    
-
-     //fetch questions from firebase based on state
+   //fetch questions from firebase based on state
 
      db.collection('questions')
      .where("subject", "==", this.state.subject)
@@ -61,9 +64,7 @@ class Quiz extends Component {
   
   render() {
 
-   
-    console.log(this.props.subject)
-
+    console.log("Rendering...")
     const {questions, currentPage, questionsPerPage} = this.state;
 
     //logic for displaying questions
