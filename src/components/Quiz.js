@@ -5,29 +5,51 @@ import { db } from '../services/firebase'
 class Quiz extends Component {
   constructor(props){
     super(props);
+    //console.log(this.props)
     this.state = {
       questions: [],
       currentPage: 1,
-      questionsPerPage: 1
+      questionsPerPage: 1,
+      subject:"",
+      grade:"",
+      chapter:""
     };
+    console.log("Quiz State")
+    console.log(this.state)
   }
   
- 
+  static getDerivedStateFromProps(props, state){
+    console.log(props)
+    return (
+      {subject: props.selectedSubject},
+      {grade: props.selectedGrade},
+      {chapter: props.selectedLesson}
+    )
+  }
+
   componentWillMount(){
-    console.log("mounted")
-    db.collection('questions')
-      .get()
-      .then( snapshot => {
-        console.log(snapshot)
-        const questions = []
-        snapshot.forEach( doc => {
-          doc = doc.data()
-          questions.push(doc)
-        })
-        console.log(questions);
-        this.setState({questions: questions})
-      })
-      .catch( error => console.log(error))
+    console.log("Quiz mounted")
+    console.log(this.props)
+    
+  
+    
+
+     //fetch questions from firebase based on state
+
+     db.collection('questions')
+     .where("subject", "==", this.state.subject)
+     .get()
+     .then( snapshot => {
+       //console.log(snapshot)
+       const questions = []
+       snapshot.forEach( doc => {
+         doc = doc.data()
+         questions.push(doc)
+       })
+       //console.log(questions);
+       this.setState({questions: questions})
+     })
+     .catch( error => console.log(error))
   }
 
   handleClick = () => {
@@ -38,6 +60,10 @@ class Quiz extends Component {
 
   
   render() {
+
+   
+    console.log(this.props.subject)
+
     const {questions, currentPage, questionsPerPage} = this.state;
 
     //logic for displaying questions
@@ -45,7 +71,7 @@ class Quiz extends Component {
     const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
     const currentQuestion = questions.slice(indexOfFirstQuestion, indexOfLastQuestion);
     const isLastQuestion = currentQuestion.length !== questionsPerPage || indexOfLastQuestion === questions.length;
-    console.log(currentQuestion)
+    //console.log(currentQuestion)
   
     const renderQuestions = currentQuestion.map((question, index) => {
       return (

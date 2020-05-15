@@ -11,7 +11,7 @@ class Dashboard extends Component{
 			subjects : [],
 			lesson : [],
 			selectedGrade : '--Choose Grade--',
-			selectedSubject : '--Choose Subject--',
+			selectedSubject : 'computer science',
 			selectedLesson :'--Choose Lesson--'
 		};
 		this.changeGrade = this.changeGrade.bind(this);
@@ -23,13 +23,13 @@ class Dashboard extends Component{
         db.collection('chapters')
         .get()
         .then( snapshot => {
-          console.log(snapshot)
+          //console.log(snapshot)
           const lesson = []
           snapshot.forEach( doc => {
             doc = doc.data()
             lesson.push(doc)
           })
-          console.log(lesson);
+          //console.log(lesson);
           this.setState({lesson: lesson})
         })
         .catch( error => console.log(error))
@@ -37,13 +37,13 @@ class Dashboard extends Component{
         db.collection('subjects')
           .get()
           .then( snapshot => {
-            console.log(snapshot)
+            //console.log(snapshot)
             const subjects = []
             snapshot.forEach( doc => {
               doc = doc.data()
               subjects.push(doc)
             })
-            console.log(subjects);
+            //console.log(subjects);
             this.setState({subjects: subjects})
           })
           .catch( error => console.log(error))
@@ -51,13 +51,13 @@ class Dashboard extends Component{
         db.collection('grades')
           .get()
           .then( snapshot => {
-            console.log(snapshot)
+            //console.log(snapshot)
             const grades = []
             snapshot.forEach( doc => {
               doc = doc.data()
               grades.push(doc)
             })
-            console.log(grades);
+            //console.log(grades);
             this.setState({grades:grades})
           })
           .catch( error => console.log(error))
@@ -116,17 +116,14 @@ class Dashboard extends Component{
 						})}
 					</select>
 				</div>
-				<div >
-                        <button>Load Quiz</button>
-                    </div>
+		
 			</form>
 		
-                <h1> This is Dashboard....</h1>
-                <h3> Drop-down to be updated here..</h3>
-                <Link to='/quiz'>Click to go Quiz</Link>
+      <h1> This is Dashboard....</h1>
                
-            <Quiz dropdownvalues={this.state} />
-            </div>
+               
+        <Quiz {...this.state} />
+      </div>
         )
     }
 }
