@@ -20,7 +20,7 @@ class Dashboard extends Component{
     }
     componentWillMount(){
         console.log("mounted")
-        db.collection('chapter')
+        db.collection('chapters')
         .get()
         .then( snapshot => {
           console.log(snapshot)
@@ -48,7 +48,7 @@ class Dashboard extends Component{
           })
           .catch( error => console.log(error))
      
-        db.collection('grade')
+        db.collection('grades')
           .get()
           .then( snapshot => {
             console.log(snapshot)
