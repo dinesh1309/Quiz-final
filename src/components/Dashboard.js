@@ -1,5 +1,5 @@
-import React,{Component} from 'react'
-import { Link } from 'react-router-dom'
+import React,{Component, Fragment} from 'react'
+
 import { db } from '../services/firebase'
 import Quiz from './Quiz'
 
@@ -10,9 +10,13 @@ class Dashboard extends Component{
 			grades : [],
 			subjects : [],
 			lesson : [],
-			selectedGrade : 'Grade-1',
-			selectedSubject : 'computer science',
-			selectedLesson :'Chapter-2'
+			selectedGrade : '--Choose Grade--',
+			selectedSubject : 'Choose Subject--',
+      selectedLesson :'Choose Lesson',
+      fg:"",
+      fs:"",
+      fl:""
+
 		};
 		this.changeGrade = this.changeGrade.bind(this);
 		this.changeSubject = this.changeSubject.bind(this);
@@ -78,14 +82,18 @@ class Dashboard extends Component{
 	}
 	handleSubmit=(e)=>{
     e.preventDefault();
-	console.log(this.state)
+	  this.setState({
+      fg:this.state.selectedGrade,
+      fs:this.state.selectedSubject,
+      fl:this.state.selectedLesson
+    })
     }
 
 
     render(){
         return(
             <div className="dashboard container">
-                <form onSubmit={this.handleSubmit} className="white">
+                <form  className="white">
 				<h2>Select the below Feilds:</h2>
 				<div>
 					<label>Subject :</label>
@@ -116,13 +124,16 @@ class Dashboard extends Component{
 						})}
 					</select>
 				</div>
+        <div>
+          <button onClick={this.handleSubmit}>Load Quiz</button>
+        </div>
 		
 			</form>
 		
       <h1> This is Dashboard....</h1>
                
                
-        <Quiz {...this.state} />
+        <Quiz ffs={this.state.fs} ffg={this.state.fg} ffl={this.state.fl} />
       </div>
         )
     }

@@ -22,14 +22,14 @@ class Quiz extends Component {
   static getDerivedStateFromProps(props, state){
     console.log("getDerivedStateFromProps Started")
     console.log(props)
-    if (props.selectedSubject !== state.subject){
-       return {subject: props.selectedSubject}
+    if (props.ffs!== state.subject){
+       return {subject: props.ffs}
     }
-    if (props.selectedGrade !== state.grade) {
-      return {grade: props.selectedGrade}
+    if (props.ffg!== state.grade) {
+      return {grade: props.ffg}
     }
-    if (props.selectedLesson !== state.chapter){
-      return {chapter: props.selectedLesson}
+    if (props.ffl !== state.chapter){
+      return {chapter: props.ffl}
     }
   }
 
@@ -45,20 +45,28 @@ class Quiz extends Component {
     
    //fetch questions from firebase based on state
 
-     db.collection('questions')
-     .where("subject", "==", this.state.subject)
-     .get()
-     .then( snapshot => {
-       //console.log(snapshot)
-       const questions = []
-       snapshot.forEach( doc => {
-         doc = doc.data()
-         questions.push(doc)
-       })
-       //console.log(questions);
-       this.setState({questions: questions})
-     })
-     .catch( error => console.log(error))
+    
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log("Quiz Updated")
+    // Typical usage (don't forget to compare props):
+    if (this.props.ffs !== prevProps.ffs) {
+      db.collection('questions')
+      .where("subject", "==", this.state.subject)
+      .get()
+      .then( snapshot => {
+        //console.log(snapshot)
+        const questions = []
+        snapshot.forEach( doc => {
+          doc = doc.data()
+          questions.push(doc)
+        })
+        //console.log(questions);
+        this.setState({questions: questions})
+      })
+      .catch( error => console.log(error))
+    }
   }
 
   handleClick = () => {
@@ -71,6 +79,7 @@ class Quiz extends Component {
   render() {
 
     console.log("Rendering...")
+    console.log(this.props)
     console.log(this.state)
     const {questions, currentPage, questionsPerPage} = this.state;
 
