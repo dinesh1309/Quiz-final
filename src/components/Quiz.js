@@ -5,14 +5,21 @@ import { db } from '../services/firebase'
 class Quiz extends Component {
   constructor(props){
     super(props);
-    //console.log(this.props)
+    console.log("constructor")
+    console.log(this.props)
     this.state = {
       questions: [],
       currentPage: 1,
       questionsPerPage: 1,
+<<<<<<< HEAD
       subject: this.props.selectedSubject,
       grade:this.props.selectedGrade,
       chapter:this.props.selectedLesson
+=======
+      subject: "",
+      grade: "",
+      chapter: ""
+>>>>>>> 32c2e61a6f01feb84bce1b4c9bbdfa4ab8c89f7b
     };
     console.log("Quiz State")
     console.log(this.state)
@@ -21,22 +28,35 @@ class Quiz extends Component {
   static getDerivedStateFromProps(props, state){
     console.log("getDerivedStateFromProps Started")
     console.log(props)
-    return (
-      {subject: props.selectedSubject},
-      {grade: props.selectedGrade},
-      {chapter: props.selectedLesson}
-    )
+    if (props.selectedSubject !== state.subject){
+       return {subject: props.selectedSubject}
+    }
+    if (props.selectedGrade !== state.grade) {
+      return {grade: props.selectedGrade}
+    }
+    if (props.selectedLesson !== state.chapter){
+      return {chapter: props.selectedLesson}
+    }
   }
 
+<<<<<<< HEAD
   shouldComponentUpdate(nextProps, nextState){
+=======
+ /*  shouldComponentUpdate() {
+>>>>>>> 32c2e61a6f01feb84bce1b4c9bbdfa4ab8c89f7b
     console.log("shouldComponentUpdate")
+    console.log(this.props)
     return true;
+<<<<<<< HEAD
   }
   componentWillReceiveProps(nextProps) {
     // This will erase any local state updates!
     // Do not do this.
     this.setState({ subject: nextProps.subject});
   }
+=======
+  } */
+>>>>>>> 32c2e61a6f01feb84bce1b4c9bbdfa4ab8c89f7b
 
   componentDidMount(){
     console.log("Quiz mounted")
@@ -45,7 +65,7 @@ class Quiz extends Component {
    //fetch questions from firebase based on state
 
      db.collection('questions')
-     .where("subject", "==", this.state.subject)
+     .where("subject", "==", "evs")
      .get()
      .then( snapshot => {
        //console.log(snapshot)
@@ -70,7 +90,11 @@ class Quiz extends Component {
   render() {
 
     console.log("Rendering...")
+<<<<<<< HEAD
     console.log(this.state)
+=======
+    console.log(this.props)
+>>>>>>> 32c2e61a6f01feb84bce1b4c9bbdfa4ab8c89f7b
     const {questions, currentPage, questionsPerPage} = this.state;
 
     //logic for displaying questions
@@ -82,6 +106,7 @@ class Quiz extends Component {
   
     const renderQuestions = currentQuestion.map((question, index) => {
       return (
+        
         <div key={index}>
               <p>Question: {question.question}</p>
               <p>1. {question.op1}</p>
