@@ -1,4 +1,5 @@
 import React,{Component} from 'react'
+import { Link } from 'react-router-dom'
 import { db } from '../services/firebase'
 import Quiz from './Quiz'
 
@@ -69,17 +70,14 @@ class Dashboard extends Component{
 	}
 
 	changeSubject(event) {
-    console.log(" subcalled")
 		this.setState({selectedSubject: event.target.value});
 	}
 	changeLesson(event) {
-
 		this.setState({selectedLesson: event.target.value});
 		
 	}
 	handleSubmit=(e)=>{
     e.preventDefault();
-
 	console.log(this.state)
     }
 
@@ -91,20 +89,20 @@ class Dashboard extends Component{
 				<h2>Select the below Feilds:</h2>
 				<div>
 					<label>Subject :</label>
-					<select placeholder="Subjects" value={this.state.selectedSubject} onChange={this.changeSubject}>
+					<select placeholder="Subject" value={this.state.selectedSubject} onChange={this.changeSubject}>
 						<option>--Choose Subject--</option>
 						{this.state.subjects.map((e, key) => {
-							return <option key={key} >{e.subject}</option>;
+							return <option key={key}>{e.subject}</option>;
 						})}
 					</select>
 				</div>
                 <div>
 
 					<label>Grade :</label>
-					<select placeholder="Grades" value={this.state.selectedGrade} onChange={this.changeGrade}>
+					<select placeholder="Grade" value={this.state.selectedGrade} onChange={this.changeGrade}>
 						<option>--Choose Grade--</option>
 						{this.state.grades.map((e, key) => {
-							return <option key={key}  >{e.grade}</option>;
+							return <option key={key}>{e.grade}</option>;
 						})}
 					</select>
 				</div>
@@ -124,7 +122,7 @@ class Dashboard extends Component{
       <h1> This is Dashboard....</h1>
                
                
-        <Quiz {...this.state} key={this.state.selectedSubject}/>
+        <Quiz {...this.state} />
       </div>
         )
     }
