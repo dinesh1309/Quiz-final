@@ -10,9 +10,9 @@ class Dashboard extends Component{
 			grades : [],
 			subjects : [],
 			lesson : [],
-			selectedGrade : '--Choose Grade--',
+			selectedGrade : 'Grade-1',
 			selectedSubject : 'computer science',
-			selectedLesson :'--Choose Lesson--'
+			selectedLesson :'Chapter-2'
 		};
 		this.changeGrade = this.changeGrade.bind(this);
 		this.changeSubject = this.changeSubject.bind(this);

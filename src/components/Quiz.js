@@ -5,14 +5,15 @@ import { db } from '../services/firebase'
 class Quiz extends Component {
   constructor(props){
     super(props);
-    //console.log(this.props)
+    console.log("constructor")
+    console.log(this.props)
     this.state = {
       questions: [],
       currentPage: 1,
       questionsPerPage: 1,
-      subject:"",
-      grade:"",
-      chapter:""
+      subject: "",
+      grade: "",
+      chapter: ""
     };
     console.log("Quiz State")
     console.log(this.state)
@@ -21,17 +22,22 @@ class Quiz extends Component {
   static getDerivedStateFromProps(props, state){
     console.log("getDerivedStateFromProps Started")
     console.log(props)
-    return (
-      {subject: props.selectedSubject},
-      {grade: props.selectedGrade},
-      {chapter: props.selectedLesson}
-    )
+    if (props.selectedSubject !== state.subject){
+       return {subject: props.selectedSubject}
+    }
+    if (props.selectedGrade !== state.grade) {
+      return {grade: props.selectedGrade}
+    }
+    if (props.selectedLesson !== state.chapter){
+      return {chapter: props.selectedLesson}
+    }
   }
 
-  shouldComponentUpdate() {
+ /*  shouldComponentUpdate() {
     console.log("shouldComponentUpdate")
+    console.log(this.props)
     return true;
-  }
+  } */
 
   componentDidMount(){
     console.log("Quiz mounted")
@@ -40,7 +46,7 @@ class Quiz extends Component {
    //fetch questions from firebase based on state
 
      db.collection('questions')
-     .where("subject", "==", this.state.subject)
+     .where("subject", "==", "evs")
      .get()
      .then( snapshot => {
        //console.log(snapshot)
@@ -65,6 +71,7 @@ class Quiz extends Component {
   render() {
 
     console.log("Rendering...")
+    console.log(this.props)
     const {questions, currentPage, questionsPerPage} = this.state;
 
     //logic for displaying questions
@@ -76,6 +83,7 @@ class Quiz extends Component {
   
     const renderQuestions = currentQuestion.map((question, index) => {
       return (
+        
         <div key={index}>
               <p>Question: {question.question}</p>
               <p>1. {question.op1}</p>
