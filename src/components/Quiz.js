@@ -10,9 +10,9 @@ class Quiz extends Component {
       questions: [],
       currentPage: 1,
       questionsPerPage: 1,
-      subject:"",
-      grade:"",
-      chapter:""
+      subject: this.props.selectedSubject,
+      grade:this.props.selectedGrade,
+      chapter:this.props.selectedLesson
     };
     console.log("Quiz State")
     console.log(this.state)
@@ -28,9 +28,14 @@ class Quiz extends Component {
     )
   }
 
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps, nextState){
     console.log("shouldComponentUpdate")
     return true;
+  }
+  componentWillReceiveProps(nextProps) {
+    // This will erase any local state updates!
+    // Do not do this.
+    this.setState({ subject: nextProps.subject});
   }
 
   componentDidMount(){
@@ -65,6 +70,7 @@ class Quiz extends Component {
   render() {
 
     console.log("Rendering...")
+    console.log(this.state)
     const {questions, currentPage, questionsPerPage} = this.state;
 
     //logic for displaying questions
@@ -101,11 +107,3 @@ class Quiz extends Component {
   }
 }
 export default Quiz;
-
-
-
-
-
-
-
-
