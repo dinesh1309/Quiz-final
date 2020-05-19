@@ -22,14 +22,14 @@ class Quiz extends Component {
   static getDerivedStateFromProps(props, state){
     console.log("getDerivedStateFromProps Started")
     console.log(props)
-    if (props.ffs!== state.subject){
-       return {subject: props.ffs}
+    if (props.finalFormsubject!== state.subject){
+       return {subject: props.finalFormsubject}
     }
-    if (props.ffg!== state.grade) {
-      return {grade: props.ffg}
+    if (props.finalFormgrade!== state.grade) {
+      return {grade: props.finalFormgrade}
     }
-    if (props.ffl !== state.chapter){
-      return {chapter: props.ffl}
+    if (props.finalFormlesson !== state.chapter){
+      return {chapter: props.finalFormlesson}
     }
   }
 
@@ -51,7 +51,7 @@ class Quiz extends Component {
   componentDidUpdate(prevProps) {
     console.log("Quiz Updated")
     // Typical usage (don't forget to compare props):
-    if (this.props.ffs !== prevProps.ffs) {
+    if (this.props.finalFormsubject !== prevProps.finalFormsubject) {
       db.collection('questions')
       .where("subject", "==", this.state.subject)
       .get()
@@ -92,14 +92,48 @@ class Quiz extends Component {
   
     const renderQuestions = currentQuestion.map((question, index) => {
       return (
-        
+        <div className="card">
         <div key={index}>
-              <p>Question: {question.question}</p>
-              <p>1. {question.op1}</p>
-              <p>2. {question.op2}</p>
-              <p>3. {question.op3}</p>
-              <p>4. {question.op4}</p>
-              <p>Answer: {question.answer}</p>
+        <div className="row">
+        <div className="col-md-12" >
+        <div className="qs">
+             <p>Question: {question.question}</p>
+                                </div>
+          </div>
+        </div>
+        
+            <div className="row">
+              <div className="col-md-6" >
+                  <div className="option"> 
+                       <p>1. {question.op1}</p>
+                  </div>
+              </div>
+              <div className="col-md-6" >
+                  <div className="option"> 
+                       <p>2. {question.op2}</p>
+                  </div>
+              </div>
+              </div>
+              <div class="row">
+              <div className="col-md-6">
+                  <div className="option"> 
+                       <p>3. {question.op3}</p>
+                  </div>
+              </div>
+              <div className="col-md-6">
+                  <div className="option"> 
+                       <p>4. {question.op4}</p>
+                  </div>
+              </div>
+              </div>
+              <div className="row">
+        <div className="col-md-12" >
+        <div className="ans">
+        <p>Answer: {question.answer}</p>
+                                </div>
+          </div>
+        </div>
+        </div>
         </div>
       )
     });
@@ -108,11 +142,14 @@ class Quiz extends Component {
     
 
     return (
+      
       <div className="questions">
-        <div>Quiz</div> 
         {renderQuestions}
-      {!isLastQuestion && <button onClick={this.handleClick}>Next Question</button>}
+        <div className="nxt">
+      {!isLastQuestion && <button  onClick={this.handleClick} className="btn btn-pill btn-info">Next Question <i className="glyphicon glyphicon-arrow-right"></i> ></button>}
       </div>
+      </div>
+    
     )
     
   }

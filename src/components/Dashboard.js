@@ -1,5 +1,4 @@
-import React,{Component, Fragment} from 'react'
-
+import React,{Component} from 'react'
 import { db } from '../services/firebase'
 import Quiz from './Quiz'
 
@@ -13,9 +12,9 @@ class Dashboard extends Component{
 			selectedGrade : '--Choose Grade--',
 			selectedSubject : 'Choose Subject--',
       selectedLesson :'Choose Lesson',
-      fg:"",
-      fs:"",
-      fl:""
+      formGrade:"",
+      formSubject:"",
+      formLesson:""
 
 		};
 		this.changeGrade = this.changeGrade.bind(this);
@@ -83,58 +82,65 @@ class Dashboard extends Component{
 	handleSubmit=(e)=>{
     e.preventDefault();
 	  this.setState({
-      fg:this.state.selectedGrade,
-      fs:this.state.selectedSubject,
-      fl:this.state.selectedLesson
+      fgformGrade:this.state.selectedGrade,
+      formSubject:this.state.selectedSubject,
+      formLesson:this.state.selectedLesson
     })
     }
 
 
     render(){
         return(
-            <div className="dashboard container">
-                <form  className="white">
-				<h2>Select the below Feilds:</h2>
-				<div>
-					<label>Subject :</label>
-					<select placeholder="Subject" value={this.state.selectedSubject} onChange={this.changeSubject}>
-						<option>--Choose Subject--</option>
-						{this.state.subjects.map((e, key) => {
-							return <option key={key}>{e.subject}</option>;
-						})}
-					</select>
-				</div>
-                <div>
-
-					<label>Grade :</label>
-					<select placeholder="Grade" value={this.state.selectedGrade} onChange={this.changeGrade}>
-						<option>--Choose Grade--</option>
-						{this.state.grades.map((e, key) => {
-							return <option key={key}>{e.grade}</option>;
-						})}
-					</select>
-				</div>
-				
-				<div>
-					<label>Chapter :</label>
-					<select placeholder="chapter" value={this.state.selectedLesson} onChange={this.changeLesson} >
-						<option>--Choose chapter No--</option>
-						{this.state.lesson.map((e, key) => {
-							return <option key={key}  >{e.chapter}</option>;
-						})}
-					</select>
-				</div>
-        <div>
-          <button onClick={this.handleSubmit}>Load Quiz</button>
-        </div>
-		
-			</form>
-		
-      <h1> This is Dashboard....</h1>
-               
-               
-        <Quiz ffs={this.state.fs} ffg={this.state.fg} ffl={this.state.fl} />
-      </div>
+          <div>
+            <div className="row justify-content-center">
+              <div className="col-12 col-md-8 col-lg-6 pb-5">
+              <form>
+                <div className="card border-info rounded-0">
+                            <div className="card-header p-0">
+                                <div className="bg-info text-white text-center py-2">
+                                    <h3> Select the below fields</h3>
+                                </div>
+                            </div>
+                  <div className="card-body p-3">
+			            	<div className="form-group">
+					            <label style={{color:'black'}} className="col-sm-2 col-form-label">Subject :</label>
+					            <select  className="btn btn-info dropdown-toggle" placeholder="Subject" value={this.state.selectedSubject} onChange={this.changeSubject} >
+					           	<option>--Choose Subject--</option>
+					          	{this.state.subjects.map((e, key) => {
+						        	return <option key={key}>{e.subject}</option>;
+					          	})}
+					           </select>
+			            	</div>
+                    <div className="form-group">
+                      <label style={{color:'black'}} className="col-sm-2 col-form-label"  >Grade :</label>
+					            <select className="btn btn-info dropdown-toggle" placeholder="Grade" value={this.state.selectedGrade} onChange={this.changeGrade}>
+						          <option>-- Choose Grade --</option>
+						          {this.state.grades.map((e, key) => {
+							        return <option key={key}>{e.grade}</option>;
+						          })}
+					            </select>
+				            </div>
+				            <div className="form-group">
+                      <label style={{color:'black'}} className="col-sm-2 col-form-label">Chapter :</label>
+					            <select className="btn btn-info dropdown-toggle" placeholder="chapter" value={this.state.selectedLesson} onChange={this.changeLesson} >
+						          <option>--Choose Chapter--</option>
+						          {this.state.lesson.map((e, key) => {
+						         	return <option key={key}  >{e.chapter}</option>;
+						          })}
+				            	</select>
+				            </div>
+                    <div className="text-center">
+                      <button className="btn btn-info rounded-pill" style={{width:'18 rem'}}onClick={this.handleSubmit}>Load Quiz</button>
+                    </div>
+                 </div>
+		            </div>
+			        </form>
+              </div>
+           </div>    
+            <div>    
+             <Quiz finalFormsubject={this.state.formSubject} finalFormgrade={this.state.formGrade} finalFormlesson={this.state.formLesson} />
+            </div>
+          </div>
         )
     }
 }
